@@ -1075,9 +1075,18 @@
       /* Action Plan — category sections + initiative cards (reference layout) */
       .ap-status-tabs {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 6px;
-        margin-bottom: 14px;
+        margin: 0;
+      }
+      .ap-top-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-bottom: 12px;
+        padding-bottom: 2px;
       }
       .ap-status-tab {
         padding: 8px 16px;
@@ -1167,8 +1176,38 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        flex-wrap: wrap;
-        margin: 0 0 12px;
+        flex-wrap: nowrap;
+        margin: 0;
+        margin-left: auto;
+        justify-content: flex-end;
+      }
+      .ap-inline-filters {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+        margin: 0;
+      }
+      .ap-inline-filter-select {
+        min-width: 0;
+        width: 180px;
+        padding: 8px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 13px;
+        background: #fff;
+        color: #334155;
+      }
+      .ap-inline-filter-select:focus {
+        outline: none;
+        border-color: #7dd3fc;
+        box-shadow: 0 0 0 2px rgba(125, 211, 252, 0.35);
+      }
+      @media (max-width: 520px) {
+        .ap-top-controls { flex-wrap: wrap; overflow-x: visible; }
+        .ap-inline-filters { flex-wrap: wrap; }
+        .ap-selection-controls { flex-wrap: wrap; }
+        .ap-inline-filter-select { width: 100%; }
       }
       .ap-add-init-form {
         margin: 0 0 14px;
@@ -1203,8 +1242,8 @@
       .ap-add-init-cancel { border: 1px solid #e2e8f0; background: #fff; color: #64748b; }
       .ap-card-head-right { display: flex; flex-direction: row; align-items: center; gap: 8px; flex-shrink: 0; }
       .ap-card-edit-btn {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1218,8 +1257,8 @@
       }
       .ap-card-edit-btn:hover { border-color: #cbd5e1; color: #334155; }
       .ap-card-delete-btn {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1233,8 +1272,8 @@
       }
       .ap-card-delete-btn:hover { background: #fee2e2; border-color: #fca5a5; }
       .ap-card-edit-btn svg, .ap-card-delete-btn svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         pointer-events: none;
       }
       .ap-card-edit-panel { margin-top: 10px; }
@@ -1293,12 +1332,9 @@
       .ap-card-head {
         position: relative;
         padding: 16px 16px 12px;
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        justify-content: space-between;
+        display: block;
       }
-      .ap-card-copy { flex: 1; min-width: 0; padding-right: 8px; }
+      .ap-card-copy { width: 100%; min-width: 0; padding-right: 0; }
       .ap-init-label {
         display: block;
         font-size: 8px;
@@ -1331,7 +1367,7 @@
         color: #0f172a;
       }
       .ap-card-body-text.hidden { display: none !important; }
-      .ap-card-select-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+      .ap-card-select-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; padding-right: 170px; }
       .ap-select-init { width: 14px; height: 14px; accent-color: #2563eb; cursor: pointer; }
       .ap-select-init-label { font-size: 12px; color: #475569; font-weight: 600; }
       .ap-highly-recommended {
@@ -1351,14 +1387,96 @@
         line-height: 1.45;
         color: #64748b;
       }
+      .ap-disclaimer {
+        margin: 0 0 14px;
+        padding: 10px 12px;
+        border: 1px solid #dbeafe;
+        background: #eff6ff;
+        border-radius: 10px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #1e3a8a;
+      }
+      .ap-trigger-question {
+        margin: 0 0 6px;
+        font-size: 12px;
+        color: #475569;
+      }
+      .ap-trigger-btn {
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #1f3b66;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .ap-trigger-btn:hover {
+        color: #1e40af;
+      }
+      .ap-trigger-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+      .ap-card-footer {
+        padding: 0 16px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .ap-view-question-link {
+        border: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        color: #1f3b66;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .ap-view-question-link:hover {
+        color: #16335a;
+      }
+      .ap-score-status-pill,
+      .ap-intensity-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 3px 8px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .ap-score-status-pill { border: 1px solid #cbd5e1; color: #475569; background: #f8fafc; }
+      .ap-score-status-critical { border-color: #fecaca; color: #991b1b; background: #fef2f2; }
+      .ap-score-status-below { border-color: #fde68a; color: #92400e; background: #fffbeb; }
+      .ap-intensity-pill { border: 1px solid #bfdbfe; color: #1d4ed8; background: #dbeafe; }
+      .ap-trigger-question-dialog { max-width: 520px; }
+      .ap-trigger-question-text { margin: 0; font-size: 15px; line-height: 1.5; color: #0f172a; }
+      .ap-card-head-right {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: auto;
+        justify-content: flex-end;
+      }
       .ap-status-select {
         flex-shrink: 0;
-        max-width: 118px;
-        padding: 6px 12px;
+        max-width: 110px;
+        padding: 4px 10px;
         border-radius: 999px;
         border: 1px solid #e2e8f0;
         background: #f1f5f9;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 600;
         text-transform: none;
         letter-spacing: 0;
@@ -1428,16 +1546,23 @@
         font-weight: 600;
       }
       .ap-card-meta {
-        display: block;
+        display: inline-flex;
         font-size: 10px;
         color: #94a3b8;
         font-weight: 600;
         line-height: 1.3;
         min-height: 1.3em;
-        margin-top: 2px;
+        margin-top: 0;
       }
       .ap-card-meta:empty::before {
         content: "\00a0";
+      }
+      .ap-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 16px 14px;
       }
       .ap-init-card.hidden-by-ap-filter { display: none !important; }
       .ap-init-card.hidden-by-selection { display: none !important; }
@@ -2605,6 +2730,16 @@
           </div>
         </div>
       </div>
+      <div id="ap-trigger-modal" class="manual-insight-modal hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="ap-trigger-modal-title">
+        <div class="manual-insight-modal-backdrop"></div>
+        <div class="manual-insight-dialog ap-trigger-question-dialog">
+          <h3 id="ap-trigger-modal-title">Trigger Question</h3>
+          <p id="ap-trigger-modal-text" class="ap-trigger-question-text"></p>
+          <div class="manual-insight-actions">
+            <button type="button" class="manual-insight-save" id="ap-trigger-modal-close">Close</button>
+          </div>
+        </div>
+      </div>
 
       <button type="button" class="ai-insights-fab" id="ai-insights-fab" aria-label="Open AI Insights">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.04-4.79A2.5 2.5 0 0 1 8 9.84a2.5 2.5 0 0 1 1.5-4.34z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.04-4.79A2.5 2.5 0 0 0 16 9.84a2.5 2.5 0 0 0-1.5-4.34z"/></svg>
@@ -2772,7 +2907,7 @@
       <!-- Users (ADMIN only) -->
       <section id="view-users" class="hidden">
         <p style="margin: 0 0 12px;">
-          <button type="button" id="users-back-to-settings-btn" class="settings-btn-update" aria-label="Go back">&#8592; Back</button>
+          <button type="button" id="users-back-to-settings-btn" class="settings-btn-update" aria-label="Go back">&#8592;</button>
         </p>
         <h1 class="page-title" data-i18n="titleUsers">Users</h1>
         <p class="subtitle" data-i18n="subtitleUsers">Invite users by link. You can send the link by email or copy it.</p>
@@ -4580,6 +4715,65 @@
       }
 
       var execHighlight = { layerId: null, dimensionId: null, questionId: null };
+      var ACTION_LIBRARY_CACHE = null;
+      var ACTION_LIBRARY_PROMISE = null;
+      function normalizeTextForMatch(value) {
+        return String(value || "")
+          .toLowerCase()
+          .replace(/[®]/g, "")
+          .replace(/[^a-z0-9]+/g, " ")
+          .trim();
+      }
+      function normalizeIntensityKey(raw) {
+        var s = String(raw || "").toLowerCase();
+        if (s.indexOf("quick") >= 0 || s.indexOf("low") >= 0) return "quick-win";
+        if (s.indexOf("improvement") >= 0 || s.indexOf("medium") >= 0) return "improvement";
+        if (s.indexOf("structural") >= 0 || s.indexOf("high") >= 0) return "structural-change";
+        return "improvement";
+      }
+      function intensityLabelFromKey(key) {
+        if (key === "quick-win") return "Quick win";
+        if (key === "structural-change") return "Structural change";
+        return "Improvement";
+      }
+      function scoreStatusFromScore(score) {
+        var n = Number(score || 0);
+        if (n < 50) return "Critical";
+        if (n < 65) return "Below Average";
+        return "Healthy";
+      }
+      function isLowScoreStatus(status) {
+        return status === "Critical" || status === "Below Average";
+      }
+      function recommendedIntensityForScore(score) {
+        var n = Number(score || 0);
+        if (n < 50) return "structural-change";
+        if (n < 58) return "improvement";
+        return "quick-win";
+      }
+      function loadActionLibrary() {
+        if (ACTION_LIBRARY_CACHE) return Promise.resolve(ACTION_LIBRARY_CACHE);
+        if (ACTION_LIBRARY_PROMISE) return ACTION_LIBRARY_PROMISE;
+        ACTION_LIBRARY_PROMISE = fetch("action-library.json", { cache: "no-store" })
+          .then(function (res) { return res.ok ? res.json() : []; })
+          .then(function (rows) {
+            ACTION_LIBRARY_CACHE = Array.isArray(rows) ? rows : [];
+            return ACTION_LIBRARY_CACHE;
+          })
+          .catch(function () { return []; });
+        return ACTION_LIBRARY_PROMISE;
+      }
+      function matchActionLibraryRows(rows, questionText, dimensionName) {
+        var qNorm = normalizeTextForMatch(questionText);
+        var dNorm = normalizeTextForMatch(dimensionName);
+        var byQuestion = (rows || []).filter(function (row) {
+          return normalizeTextForMatch(row.question) === qNorm;
+        });
+        if (byQuestion.length) return byQuestion;
+        return (rows || []).filter(function (row) {
+          return normalizeTextForMatch(row.dimension) === dNorm;
+        });
+      }
       async function getExecutionData(pageFilters) {
         var activeFilters = pageFilters || {};
         var filtersParam = Object.keys(activeFilters).length > 0 ? "?filters=" + encodeURIComponent(JSON.stringify(activeFilters)) : "";
@@ -4625,61 +4819,56 @@
         highest3.forEach(function (q, i) {
           insights.push({ id: "insight-strength-" + i, type: "strength", severity: "medium", linkedQuestionIds: [q.id], linkedDimensionId: q.dimensionId, linkedLayerId: q.layerId, text: interpretQuestionHigh(q.text, scoreFmt) });
         });
+        var actionLibraryRows = await loadActionLibrary();
         var recs = [];
-        if (dimensions.length === 0) {
-          recs = [
-            { id: "rec-fallback-0", title: "Strategic action: Capture fresh responses so Achieve can auto-build dimension initiatives from real signals—not placeholders.", barrier: "Strategic action: Capture fresh responses so Achieve can auto-build dimension initiatives from real signals—not placeholders.", linkedInsightIds: [], linkedLayerId: layers[0] ? layers[0].id : null, linkedDimensionId: null, categoryDimensionId: "dim-fallback", linkedQuestionIds: [], impact: "Medium", effort: "Medium", owner: "", timeframe: "" },
-            { id: "rec-fallback-1", title: "Strategic action: Validate sections and dimensions in analytics so every initiative card maps to how your organisation actually runs.", barrier: "Strategic action: Validate sections and dimensions in analytics so every initiative card maps to how your organisation actually runs.", linkedInsightIds: [], linkedLayerId: layers[0] ? layers[0].id : null, linkedDimensionId: null, categoryDimensionId: "dim-fallback", linkedQuestionIds: [], impact: "Medium", effort: "Low", owner: "", timeframe: "" },
-            { id: "rec-fallback-2", title: "Strategic action: After the next pulse, revisit Action Plan—priorities reshuffle as scores move, keeping initiatives honest.", barrier: "Strategic action: After the next pulse, revisit Action Plan—priorities reshuffle as scores move, keeping initiatives honest.", linkedInsightIds: [], linkedLayerId: layers[0] ? layers[0].id : null, linkedDimensionId: null, categoryDimensionId: "dim-fallback", linkedQuestionIds: [], impact: "Low", effort: "Low", owner: "", timeframe: "" }
-          ];
-        } else {
-          dimensions.forEach(function (dim) {
-            var qs = questions.filter(function (q) { return q.dimensionId === dim.id; }).slice().sort(function (a, b) { return (a.score || 0) - (b.score || 0); });
-            var q0 = qs[0], q1 = qs[1], q2 = qs[2];
-            var D = dim.name || "this execution lever";
-            var specs = [
-              {
-                title: "Breakthrough lab: ignite measurable lift in " + D,
-                barrier: q0
-                  ? ("Strategic action: Give this signal exec air-cover, a 60-day experiment backlog, and one north-star metric the whole team watches (from " + scoreFmt(q0.score) + " upward).")
-                  : ("Strategic action: Charter a small squad, publish a crisp problem statement, and demo tangible progress every two weeks until the scorecard moves."),
-                ids: q0 ? [q0.id] : []
-              },
-              {
-                title: "Operating rhythm: lock accountability into how " + D + " runs",
-                barrier: q1
-                  ? ("Strategic action: Rotate owners, time-box decisions, and close the loop only when behaviour—not slides—shifts in the field.")
-                  : ("Strategic action: Run a lean monthly forum with a visible backlog and a “one experiment shipped” rule so energy doesn’t evaporate."),
-                ids: q1 ? [q1.id] : []
-              },
-              {
-                title: "Scale & story: turn " + D + " wins into culture fuel",
-                barrier: q2
-                  ? ("Strategic action: Package learnings, coach people managers, and tie recognition to sustained uplift—not one-off heroics.")
-                  : ("Strategic action: Codify the playbook, retire zombie projects, and narrate before/after so teams copy what actually worked."),
-                ids: q2 ? [q2.id] : []
-              }
-            ];
-            specs.forEach(function (s, i) {
-              var impact = dim.score != null && dim.score < 58 ? "High" : dim.score != null && dim.score < 72 ? "Medium" : "Low";
-              var effort = i === 1 ? "High" : i === 2 ? "Low" : "Medium";
-              recs.push({
-                id: "rec-dim-" + String(dim.id).replace(/[^a-zA-Z0-9_-]/g, "_") + "-" + i,
-                title: s.title,
-                barrier: s.barrier,
-                linkedInsightIds: [],
-                linkedLayerId: dim.layerId,
-                linkedDimensionId: dim.id,
-                categoryDimensionId: dim.id,
-                linkedQuestionIds: s.ids,
-                impact: impact,
-                effort: effort,
-                owner: "",
-                timeframe: i === 0 ? "90 days" : i === 1 ? "120 days" : "60 days"
-              });
+        var lowQuestions = questions.filter(function (q) {
+          return isLowScoreStatus(scoreStatusFromScore(q.score));
+        });
+        lowQuestions.forEach(function (q, qIndex) {
+          var dim = dimensions.find(function (d) { return d.id === q.dimensionId; }) || { id: "dim-fallback", name: "General", layerId: layers[0] ? layers[0].id : null };
+          var statusLabel = scoreStatusFromScore(q.score);
+          var recommendedIntensity = recommendedIntensityForScore(q.score);
+          var rows = matchActionLibraryRows(actionLibraryRows, q.text, dim.name);
+          var byIntensity = { "quick-win": null, "improvement": null, "structural-change": null };
+          rows.forEach(function (row) {
+            var key = normalizeIntensityKey(row.intensityRaw);
+            if (!byIntensity[key]) byIntensity[key] = row;
+          });
+          ["quick-win", "improvement", "structural-change"].forEach(function (intensityKey, i) {
+            var row = byIntensity[intensityKey];
+            var fallbackTitle = intensityKey === "quick-win"
+              ? "Execute a focused quick-win intervention"
+              : intensityKey === "improvement"
+                ? "Run an improvement plan with clear owners"
+                : "Launch a structural change initiative";
+            var fallbackBody = intensityKey === "quick-win"
+              ? "Address the issue immediately with low-complexity actions and clear accountability."
+              : intensityKey === "improvement"
+                ? "Implement a medium-term improvement cycle with milestones, ownership, and follow-up."
+                : "Redesign process, governance, or capability foundations to resolve root drivers sustainably.";
+            recs.push({
+              id: "rec-q-" + String(q.id || qIndex).replace(/[^a-zA-Z0-9_-]/g, "_") + "-" + intensityKey,
+              title: (row && row.actionTitle) ? row.actionTitle : fallbackTitle,
+              barrier: (row && row.actionDescription) ? row.actionDescription : fallbackBody,
+              linkedInsightIds: [],
+              linkedLayerId: dim.layerId,
+              linkedDimensionId: dim.id,
+              categoryDimensionId: dim.id,
+              linkedQuestionIds: [q.id],
+              sourceQuestionText: q.text || "",
+              scoreStatusLabel: statusLabel,
+              intensityKey: intensityKey,
+              intensityLabel: intensityLabelFromKey(intensityKey),
+              rootCause: (row && row.rootCause) ? row.rootCause : interpretQuestionLow(q.text, scoreFmt),
+              subDimension: row && row.subDimension ? row.subDimension : "",
+              recommended: intensityKey === recommendedIntensity,
+              impact: intensityKey === "structural-change" ? "High" : intensityKey === "improvement" ? "Medium" : "Low",
+              effort: intensityKey === "structural-change" ? "High" : intensityKey === "improvement" ? "Medium" : "Low",
+              owner: "",
+              timeframe: intensityKey === "quick-win" ? "30 days" : intensityKey === "improvement" ? "60 days" : "90 days"
             });
           });
-        }
+        });
         return { overall, n, layers, dimensions, questions, insights, recommendations: recs, demographics: data.demographics || [] };
       }
 
@@ -5961,6 +6150,7 @@ if (segmentData && segmentData.length > 0) {
         return impactScore + effortScore + riskScore;
       }
       function getInitiativeRootCauseText(r, execData) {
+        if (r && r.rootCause) return String(r.rootCause);
         var linked = (r.linkedQuestionIds || [])
           .map(function (qid) { return (execData.questions || []).find(function (q) { return q.id === qid; }); })
           .filter(Boolean)
@@ -5975,9 +6165,18 @@ if (segmentData && segmentData.length > 0) {
       }
       function applyActionPlanStatusFilter(rootEl, filterKey) {
         if (!rootEl) return;
+        var teamFilterEl = rootEl.querySelector("#ap-team-filter");
+        var priorityFilterEl = rootEl.querySelector("#ap-priority-filter");
+        var teamFilter = teamFilterEl ? teamFilterEl.value : "";
+        var priorityFilter = priorityFilterEl ? priorityFilterEl.value : "";
         rootEl.querySelectorAll(".ap-init-card").forEach(function (card) {
           var st = card.getAttribute("data-ap-status") || "not-started";
-          var show = filterKey === "all" || st === filterKey;
+          var team = card.getAttribute("data-ap-team") || "";
+          var priority = card.getAttribute("data-ap-priority") || "";
+          var statusMatch = filterKey === "all" || st === filterKey;
+          var teamMatch = !teamFilter || team === teamFilter;
+          var priorityMatch = !priorityFilter || priority === priorityFilter;
+          var show = statusMatch && teamMatch && priorityMatch;
           card.classList.toggle("hidden-by-ap-filter", !show);
         });
         rootEl.querySelectorAll(".ap-category").forEach(function (cat) {
@@ -6027,6 +6226,16 @@ if (segmentData && segmentData.length > 0) {
       }
       function closeActionInitModal() {
         var modal = document.getElementById("action-init-modal");
+        if (modal) { modal.classList.add("hidden"); modal.setAttribute("aria-hidden", "true"); }
+      }
+      function openActionPlanTriggerModal(questionText) {
+        var modal = document.getElementById("ap-trigger-modal");
+        var txt = document.getElementById("ap-trigger-modal-text");
+        if (txt) txt.textContent = String(questionText || "").trim();
+        if (modal) { modal.classList.remove("hidden"); modal.setAttribute("aria-hidden", "false"); }
+      }
+      function closeActionPlanTriggerModal() {
+        var modal = document.getElementById("ap-trigger-modal");
         if (modal) { modal.classList.add("hidden"); modal.setAttribute("aria-hidden", "true"); }
       }
       function saveActionInitFromModal() {
@@ -6125,6 +6334,13 @@ if (segmentData && segmentData.length > 0) {
             refreshGlobalSelectionView();
           });
         });
+        el.querySelectorAll(".ap-trigger-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var questionText = btn.getAttribute("data-trigger-question") || "";
+            if (!questionText) return;
+            openActionPlanTriggerModal(questionText);
+          });
+        });
         refreshGlobalSelectionView();
         var addModal = document.getElementById("action-init-modal");
         var addCancel = document.getElementById("action-init-cancel");
@@ -6134,6 +6350,14 @@ if (segmentData && segmentData.length > 0) {
         if (addModal) {
           addModal.onclick = function (e) {
             if (e.target && e.target.classList && e.target.classList.contains("manual-insight-modal-backdrop")) closeActionInitModal();
+          };
+        }
+        var triggerModal = document.getElementById("ap-trigger-modal");
+        var triggerClose = document.getElementById("ap-trigger-modal-close");
+        if (triggerClose) triggerClose.onclick = closeActionPlanTriggerModal;
+        if (triggerModal) {
+          triggerModal.onclick = function (e) {
+            if (e.target && e.target.classList && e.target.classList.contains("manual-insight-modal-backdrop")) closeActionPlanTriggerModal();
           };
         }
         el.querySelectorAll(".ap-card-edit-btn").forEach(function (btn) {
@@ -6203,7 +6427,7 @@ if (segmentData && segmentData.length > 0) {
         if (execData) renderAIInsightsPanel(execData, "action-plan");
         if (!execData) { el.innerHTML = "<p>Unable to load data.</p>"; return; }
         var headerEl = document.getElementById("exec-action-plan-header");
-        if (headerEl) headerEl.innerHTML = "<h1 class=\"exec-page-title\">Action Plan</h1><p class=\"exec-page-subtitle\">Recommended actions based on your survey results — assign teams, deadlines &amp; priorities.</p>";
+        if (headerEl) headerEl.innerHTML = "<h1 class=\"exec-page-title\">Action Plan</h1>";
         var savedAll = getActionPlanCardsState();
         var dimensions = execData.dimensions || [];
         var recs = execData.recommendations.slice().filter(function (r) {
@@ -6212,11 +6436,29 @@ if (segmentData && segmentData.length > 0) {
         var groups = groupRecsByDimension(recs, dimensions);
         mergeManualInitiativesIntoGroups(groups, dimensions, getManualActionInitiatives());
         var html = "<div class=\"ap-page-root\" id=\"ap-root\">";
+        html += "<div class=\"ap-top-controls\">";
         html += "<div class=\"ap-status-tabs\" role=\"tablist\">";
         html += "<button type=\"button\" class=\"ap-status-tab active\" data-ap-filter=\"all\" role=\"tab\">All</button>";
         html += "<button type=\"button\" class=\"ap-status-tab\" data-ap-filter=\"not-started\" role=\"tab\">Not Started</button>";
         html += "<button type=\"button\" class=\"ap-status-tab\" data-ap-filter=\"in-progress\" role=\"tab\">In Progress</button>";
         html += "<button type=\"button\" class=\"ap-status-tab\" data-ap-filter=\"done\" role=\"tab\">Done ✓</button>";
+        html += "</div>";
+        html += "<div class=\"ap-inline-filters\">";
+        html += "<select id=\"ap-team-filter\" class=\"ap-inline-filter-select\" aria-label=\"Filter by team\">";
+        html += "<option value=\"\">All teams</option>";
+        html += "<option value=\"leadership\">Leadership</option>";
+        html += "<option value=\"hr\">HR</option>";
+        html += "<option value=\"operations\">Operations</option>";
+        html += "<option value=\"function-head\">Function Head</option>";
+        html += "<option value=\"it\">IT</option>";
+        html += "<option value=\"communications\">Communications</option>";
+        html += "</select>";
+        html += "<select id=\"ap-priority-filter\" class=\"ap-inline-filter-select\" aria-label=\"Filter by priority\">";
+        html += "<option value=\"\">All priorities</option>";
+        html += "<option value=\"high\">High</option>";
+        html += "<option value=\"medium\">Medium</option>";
+        html += "<option value=\"low\">Low</option>";
+        html += "</select>";
         html += "</div>";
         html += "<div class=\"ap-selection-controls\">";
         html += "<button type=\"button\" class=\"ap-add-init-save\" id=\"ap-apply-selection-btn\" disabled>Apply</button>";
@@ -6224,6 +6466,8 @@ if (segmentData && segmentData.length > 0) {
         html += "<button type=\"button\" class=\"ap-add-init-cancel\" id=\"ap-deselect-selection-btn\" disabled>Deselect</button>";
         html += "<button type=\"button\" class=\"ap-add-init-btn\" id=\"ap-open-add-init-btn\">+ Add initiative</button>";
         html += "</div>";
+        html += "</div>";
+        html += "<div class=\"ap-disclaimer\">Suggested actions are generated from the Action Library. Each low-scored question (Below Average or Critical) includes 3 suggested actions with different intensities. Achieve highlights the recommended action based on score severity, and you can select one or more actions to apply.</div>";
         if (!groups.length) {
           html += "<p class=\"exec-body\" style=\"color:#64748b;padding:8px 0;\">No actions for the current filters.</p>";
         }
@@ -6237,10 +6481,6 @@ if (segmentData && segmentData.length > 0) {
           html += "<div class=\"ap-category-head\"><div class=\"ap-category-left\"><div class=\"ap-cat-ic-wrap\" aria-hidden=\"true\">" + iconSvg + "</div><div><h2 class=\"ap-category-title\">" + escapeHtml(dim.name || "Dimension") + " <span class=\"ap-category-score\">" + escapeHtml(String(scoreNum)) + "</span></h2></div></div>";
           html += "<div class=\"ap-category-meta\"><div class=\"ap-category-count\">" + g.recs.length + " action" + (g.recs.length !== 1 ? "s" : "") + "</div></div></div>";
           html += "<div class=\"initiative-grid\">";
-          var recommendedPool = g.recs.filter(function (x) { return !x.isManual; });
-          var topRecommendedId = recommendedPool.length
-            ? recommendedPool.slice().sort(function (a, b) { return getInitiativeRecommendationScore(b, execData) - getInitiativeRecommendationScore(a, execData); })[0].id
-            : "";
           g.recs.forEach(function (r) {
             var st = (savedAll[r.id] && savedAll[r.id].status) || "not-started";
             var pri = (savedAll[r.id] && savedAll[r.id].priority) || defaultPriorityKeyFromImpact(r.impact);
@@ -6254,8 +6494,14 @@ if (segmentData && segmentData.length > 0) {
             var bodyText = getApInitiativeBodyText(r, savedAll);
             var bodyEsc = escapeHtml(bodyText);
             var rootCause = getInitiativeRootCauseText(r, execData);
-            html += "<article class=\"exec-priority-card initiative-card ap-init-card\" data-rec-id=\"" + escapeAttr(r.id) + "\" data-ap-status=\"" + escapeAttr(st) + "\" data-sort-impact=\"" + ir + "\" data-sort-effort=\"" + er + "\" data-sort-risk=\"" + riskScore + "\">";
-            html += "<div class=\"ap-card-head\"><div class=\"ap-card-copy\"><div class=\"ap-card-select-row\"><input type=\"checkbox\" class=\"ap-select-init\" aria-label=\"Select initiative\" " + (isSelected ? "checked" : "") + " /><span class=\"ap-select-init-label\">Select initiative</span>" + (r.id === topRecommendedId ? "<span class=\"ap-highly-recommended\">Highly recommended</span>" : "") + "</div><p class=\"ap-card-body-text\">" + bodyEsc + "</p><p class=\"ap-root-cause\">" + escapeHtml(rootCause) + "</p>";
+            var linkedQuestion = (execData.questions || []).find(function (q) { return (r.linkedQuestionIds || []).indexOf(q.id) >= 0; });
+            var triggerQuestion = r.sourceQuestionText || (linkedQuestion ? linkedQuestion.text : "");
+            var intensityLabel = r.intensityLabel || intensityLabelFromKey(r.intensityKey || "");
+            var isRecommended = !!r.recommended;
+            html += "<article class=\"exec-priority-card initiative-card ap-init-card\" data-rec-id=\"" + escapeAttr(r.id) + "\" data-ap-status=\"" + escapeAttr(st) + "\" data-ap-priority=\"" + escapeAttr(pri) + "\" data-ap-team=\"" + escapeAttr(team) + "\" data-sort-impact=\"" + ir + "\" data-sort-effort=\"" + er + "\" data-sort-risk=\"" + riskScore + "\">";
+            html += "<div class=\"ap-card-head\"><div class=\"ap-card-copy\"><div class=\"ap-card-select-row\"><input type=\"checkbox\" class=\"ap-select-init\" aria-label=\"Select initiative\" " + (isSelected ? "checked" : "") + " />" + (isRecommended ? "<span class=\"ap-highly-recommended\">Recommended best action</span>" : "") + "</div>";
+            html += "<div class=\"ap-trigger-meta\"><span class=\"ap-intensity-pill\">" + escapeHtml(intensityLabel) + "</span></div>";
+            html += "<p class=\"ap-card-body-text\">" + bodyEsc + "</p><p class=\"ap-root-cause\"><strong>Root cause:</strong> " + escapeHtml(rootCause) + "</p>";
             html += "<div class=\"ap-card-edit-panel hidden\"><textarea class=\"ap-card-edit-ta\" aria-label=\"Edit initiative\">" + bodyEsc + "</textarea>";
             html += "<div class=\"ap-card-edit-actions\"><button type=\"button\" class=\"ap-card-edit-save\">Save</button><button type=\"button\" class=\"ap-card-edit-cancel\">Cancel</button></div></div></div>";
             html += "<div class=\"ap-card-head-right\"><button type=\"button\" class=\"ap-card-edit-btn\" aria-label=\"Edit initiative\" title=\"Edit initiative\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z\"/></svg></button><button type=\"button\" class=\"ap-card-delete-btn\" aria-label=\"Delete initiative\" title=\"Delete initiative\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6\"/><path d=\"M10 11v6\"/><path d=\"M14 11v6\"/><path d=\"M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2\"/></svg></button>";
@@ -6282,8 +6528,13 @@ if (segmentData && segmentData.length > 0) {
             html += "</select></div>";
             var tfHint = (r.timeframe && String(r.timeframe).trim()) ? String(r.timeframe).trim() : "";
             html += "<div class=\"ap-field-cell\"><span class=\"ap-field-label\">Deadline</span><input type=\"date\" class=\"ap-input ap-deadline-input\" data-ap-field=\"deadline\" value=\"" + escapeAttr(deadlineIso) + "\" />";
+            html += "</div></div>";
+            html += "<div class=\"ap-card-footer\">";
+            if (triggerQuestion) html += "<button type=\"button\" class=\"ap-view-question-link ap-trigger-btn\" data-trigger-question=\"" + escapeAttr(triggerQuestion) + "\">View question</button>";
+            else html += "<span></span>";
             html += "<span class=\"ap-card-meta\">" + (tfHint ? "Suggested: " + escapeHtml(tfHint) : "") + "</span>";
-            html += "</div></div></article>";
+            html += "</div>";
+            html += "</article>";
           });
           html += "</div></section>";
         });
@@ -6313,15 +6564,32 @@ if (segmentData && segmentData.length > 0) {
                 applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
               } else if (key === "priority") {
                 patchActionPlanCardState(id, { priority: val });
+                card.setAttribute("data-ap-priority", val);
                 syncApPrioritySelectClass(field);
+                applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
               } else if (key === "team") {
                 patchActionPlanCardState(id, { team: val });
+                card.setAttribute("data-ap-team", val);
+                applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
               } else if (key === "deadline") {
                 patchActionPlanCardState(id, { deadline: val });
               }
             });
           });
         });
+        var apTeamFilter = el.querySelector("#ap-team-filter");
+        if (apTeamFilter) {
+          apTeamFilter.addEventListener("change", function () {
+            applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
+          });
+        }
+        var apPriorityFilter = el.querySelector("#ap-priority-filter");
+        if (apPriorityFilter) {
+          apPriorityFilter.addEventListener("change", function () {
+            applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
+          });
+        }
+        applyActionPlanStatusFilter(root, el._apStatusFilter || "all");
         bindActionPlanPageExtras(el);
       }
 
