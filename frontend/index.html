@@ -2771,6 +2771,9 @@
 
       <!-- Users (ADMIN only) -->
       <section id="view-users" class="hidden">
+        <p style="margin: 0 0 12px;">
+          <button type="button" id="users-back-to-settings-btn" class="settings-btn-update">Back to Security &amp; Roles</button>
+        </p>
         <h1 class="page-title" data-i18n="titleUsers">Users</h1>
         <p class="subtitle" data-i18n="subtitleUsers">Invite users by link. You can send the link by email or copy it.</p>
         <div class="users-actions">
@@ -6926,19 +6929,25 @@ if (segmentData && segmentData.length > 0) {
       function initSettingsPage() {
         var tabs = document.querySelectorAll(".settings-tab");
         var panels = document.querySelectorAll(".settings-panel");
+        function activateSettingsTab(tabId) {
+          tabs.forEach(function (b) { b.classList.remove("active"); });
+          panels.forEach(function (p) { p.classList.remove("active"); });
+          var tabBtn = document.querySelector('.settings-tab[data-settings-tab="' + tabId + '"]');
+          var panel = document.getElementById("settings-panel-" + tabId);
+          if (tabBtn) tabBtn.classList.add("active");
+          if (panel) panel.classList.add("active");
+          if (tabId === "company-profile") loadCompanyProfileForm();
+          if (tabId === "security") loadSettingsUsersTable();
+          if (tabId === "survey-modules") loadSettingsSurveyModules();
+        }
         tabs.forEach(function (btn) {
           btn.addEventListener("click", function () {
             var tabId = btn.getAttribute("data-settings-tab");
-            tabs.forEach(function (b) { b.classList.remove("active"); });
-            panels.forEach(function (p) { p.classList.remove("active"); });
-            btn.classList.add("active");
-            var panel = document.getElementById("settings-panel-" + tabId);
-            if (panel) panel.classList.add("active");
-            if (tabId === "company-profile") loadCompanyProfileForm();
-            if (tabId === "security") loadSettingsUsersTable();
-            if (tabId === "survey-modules") loadSettingsSurveyModules();
+            activateSettingsTab(tabId);
           });
         });
+        var requestedTab = getSearchParams().get("tab");
+        if (requestedTab) activateSettingsTab(requestedTab);
         var formCompany = document.getElementById("form-company-profile");
         if (formCompany) {
           formCompany.addEventListener("submit", function (e) {
@@ -6992,6 +7001,10 @@ if (segmentData && segmentData.length > 0) {
         var inviteBtn = document.getElementById("settings-invite-user-btn");
         if (inviteBtn) {
           inviteBtn.addEventListener("click", function (e) { e.preventDefault(); setPath("/users"); renderRoute(); });
+        }
+        var usersBackBtn = document.getElementById("users-back-to-settings-btn");
+        if (usersBackBtn) {
+          usersBackBtn.onclick = function () { setPath("/settings?tab=security"); renderRoute(); };
         }
         initSettingsTheme();
         initSettingsNotifications();
