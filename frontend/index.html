@@ -2772,7 +2772,7 @@
       <!-- Users (ADMIN only) -->
       <section id="view-users" class="hidden">
         <p style="margin: 0 0 12px;">
-          <button type="button" id="users-back-to-settings-btn" class="settings-btn-update">Back to Security &amp; Roles</button>
+          <button type="button" id="users-back-to-settings-btn" class="settings-btn-update" aria-label="Go back">&#8592; Back</button>
         </p>
         <h1 class="page-title" data-i18n="titleUsers">Users</h1>
         <p class="subtitle" data-i18n="subtitleUsers">Invite users by link. You can send the link by email or copy it.</p>
@@ -7004,7 +7004,14 @@ if (segmentData && segmentData.length > 0) {
         }
         var usersBackBtn = document.getElementById("users-back-to-settings-btn");
         if (usersBackBtn) {
-          usersBackBtn.onclick = function () { setPath("/settings?tab=security"); renderRoute(); };
+          usersBackBtn.onclick = function () {
+            if (window.history.length > 1) {
+              window.history.back();
+              return;
+            }
+            setPath("/settings?tab=security");
+            renderRoute();
+          };
         }
         initSettingsTheme();
         initSettingsNotifications();
