@@ -3227,14 +3227,14 @@
       const API_BASE = (typeof window !== "undefined" && window.API_BASE)
         ? window.API_BASE.replace(/\/$/, "")
         : (() => {
-          if (!(typeof window !== "undefined" && window.location)) return "http://localhost:3000";
+          if (!(typeof window !== "undefined" && window.location)) return "https://achieve-9chf.onrender.com";
           var host = window.location.hostname || "localhost";
           var port = window.location.port || "";
           // Local frontend dev servers (e.g. localhost:5173) should call backend on :3000.
           if ((host === "localhost" || host === "127.0.0.1") && port && port !== "3000") {
             return "http://" + host + ":3000";
           }
-          return window.location.origin || "http://localhost:3000";
+          return window.location.origin || "https://achieve-9chf.onrender.com";
         })();
       var SURVEY_EMBED_URL = typeof window.NEXT_PUBLIC_SURVEY_EMBED_URL !== "undefined" ? window.NEXT_PUBLIC_SURVEY_EMBED_URL : "";
 
