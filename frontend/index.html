@@ -3358,7 +3358,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <script src="env.js"></script>
-    <script src="question-translations-ar.js"></script>
     <script>
       
       // When hosting: set window.API_BASE in env.js, or default to the same origin as the current page.
@@ -3395,7 +3394,7 @@
 
       // Language
       var LANG_STORAGE_KEY = "survey-platform-lang";
-      var currentLang = (typeof localStorage !== "undefined" && localStorage.getItem(LANG_STORAGE_KEY)) || "en";
+      var currentLang = "en";
       var translations = {
         en: {
           navSectionSurvey: "Survey", navSectionAnalytics: "Analytics", navSurvey: "Achieve //", navResults: "Results", navDashboard: "Dashboard", navInsights: "Insights", navRecommendations: "Recommendations", navCharts: "Charts", navUsers: "Users", navAccount: "Account", navSettings: "Settings", navLogout: "Logout",
@@ -3535,21 +3534,20 @@
         }
         return s;
       }
-      function trQuestionLabel(en, arFromDb) { if (!en) return en; if (currentLang === "ar" && arFromDb) return arFromDb; if (currentLang !== "ar") return en; return (window.SURVEY_QUESTIONS_AR && window.SURVEY_QUESTIONS_AR[en]) || en; }
-      function trSectionTitle(en, arFromDb) { if (!en) return en; if (currentLang === "ar" && arFromDb) return arFromDb; if (currentLang !== "ar") return en; return (window.SURVEY_SECTIONS_AR && window.SURVEY_SECTIONS_AR[en]) || en; }
-      function trDimensionName(en, arFromDb) { if (!en) return en; if (currentLang === "ar" && arFromDb) return arFromDb; if (currentLang !== "ar") return en; return (window.SURVEY_DIMENSIONS_AR && window.SURVEY_DIMENSIONS_AR[en]) || en; }
-      function trOption(en) { if (!en || currentLang !== "ar" || !window.SURVEY_OPTIONS_AR) return en; return window.SURVEY_OPTIONS_AR[en] || en; }
+      function trQuestionLabel(en, arFromDb) { return en; }
+      function trSectionTitle(en, arFromDb) { return en; }
+      function trDimensionName(en, arFromDb) { return en; }
+      function trOption(en) { return en; }
       function applyTranslations() {
-        var isRtl = currentLang === "ar";
-        document.documentElement.dir = isRtl ? "rtl" : "ltr";
-        document.documentElement.lang = isRtl ? "ar" : "en";
-        document.body.classList.toggle("rtl", isRtl);
+        document.documentElement.dir = "ltr";
+        document.documentElement.lang = "en";
+        document.body.classList.remove("rtl");
         document.querySelectorAll("[data-i18n]").forEach(function (el) {
           var key = el.getAttribute("data-i18n");
           if (key && t(key)) el.textContent = t(key);
         });
         document.querySelectorAll(".navbar-lang-btn, .user-menu-lang-btn").forEach(function (btn) {
-          btn.classList.toggle("active", btn.getAttribute("data-lang") === currentLang);
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === "en");
         });
         var inviteRole = document.getElementById("invite-role");
         if (inviteRole) {
@@ -3588,8 +3586,8 @@
         if (toggleLinkEl) toggleLinkEl.textContent = (typeof mode !== "undefined" && mode === "signup") ? t("linkLogIn") : t("linkSignUp");
       }
       function setLanguage(lang) {
-        currentLang = lang;
-        try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) {}
+        currentLang = "en";
+        try { localStorage.setItem(LANG_STORAGE_KEY, "en"); } catch (e) {}
         applyTranslations();
         var p = path();
         if (p === "/dashboard" && typeof loadUnifiedAnalytics === "function") loadUnifiedAnalytics();
@@ -7254,11 +7252,12 @@ if (segmentData && segmentData.length > 0) {
         fillProfilePanel();
         var profileLang = document.getElementById("profile-language");
         if (profileLang) {
-          profileLang.value = currentLang;
+          profileLang.value = "en";
           profileLang.addEventListener("change", function () {
-            currentLang = profileLang.value;
-            try { localStorage.setItem(LANG_STORAGE_KEY, currentLang); } catch (e) {}
-            document.querySelectorAll(".user-menu-lang-btn").forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-lang") === currentLang); });
+            profileLang.value = "en";
+            currentLang = "en";
+            try { localStorage.setItem(LANG_STORAGE_KEY, "en"); } catch (e) {}
+            document.querySelectorAll(".user-menu-lang-btn").forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-lang") === "en"); });
             applyTranslations();
           });
         }
