@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  CREATE_USER
+  UPDATE_USER_ROLE
+  DEACTIVATE_USER
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(VIEWER)
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  auditLogs       AuditLog[]
+  surveyResponses SurveyResponse[]
+}
+
+model Invite {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      Role     @default(VIEWER)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String       @id @default(cuid())
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id])
+  action    AuditAction
+  metadata  String?
+  createdAt DateTime     @default(now())
+}
+
+model SurveySection {
+  id          String           @id @default(cuid())
+  title       String
+  titleAr     String?          // Arabic translation of title
+  description String?
+  layerLabel  String?          // e.g. "9. Layer 1"
+  order       Int              @default(0)
+  questions   SurveyQuestion[]
+}
+
+model SurveyDimension {
+  id      String   @id @default(cuid())
+  name    String   // e.g. "Capabilities & Competencies"
+  nameAr  String?  // Arabic translation of name
+  order   Int      @default(0)
+  questions SurveyQuestion[]
+}
+
+model SurveyQuestion {
+  id          String           @id @default(cuid())
+  label       String
+  labelAr     String?          // Arabic translation of question label
+  type        String           // "scale" (1-5) | "text" | "textarea" | "select"
+  options     String?          // JSON array for select; for scale use null
+  order       Int              @default(0)
+  sectionId   String?
+  section     SurveySection?   @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  dimensionId String?
+  dimension   SurveyDimension?  @relation(fields: [dimensionId], references: [id], onDelete: SetNull)
+}
+
+model SurveyResponse {
+  id        String   @id @default(cuid())
+  answers   String   // JSON object: { "questionId": "value", ... }
+  userId    String?  // one response per user when set
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+}
+
+model AppSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   // JSON
+  updatedAt DateTime @updatedAt
+}
