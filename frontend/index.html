@@ -6352,8 +6352,11 @@
         if (!execData) return "";
         var o = execData.overall;
         var n = execData.n;
-        var averageIndex = (execData && typeof execData.benchmarkIndustry === "number") ? execData.benchmarkIndustry : null;
-        var peerIndex = (execData && typeof execData.benchmarkPeers === "number") ? execData.benchmarkPeers : null;
+        // Hardcoded benchmark values for board summary cards.
+        var HARDCODED_INDUSTRY_AVG = 72;
+        var HARDCODED_PEER_AVG = 74;
+        var averageIndex = HARDCODED_INDUSTRY_AVG;
+        var peerIndex = HARDCODED_PEER_AVG;
         var averageDisplay = averageIndex != null ? scoreFmt(averageIndex) : "—";
         var peerDisplay = peerIndex != null ? scoreFmt(peerIndex) : "—";
 
@@ -6380,7 +6383,7 @@
         if (score == null) perfPhrase = "Awaiting responses to compute the index.";
         else if (score >= 86) perfPhrase = "Performance is excellent — sustain the practices that are working.";
         else if (score >= 76) perfPhrase = "Performance is healthy — momentum is strong, with focused upside available.";
-        else if (score >= 61) perfPhrase = "Performance is meeting baseline standards — meaningful upside if priority gaps are addressed.";
+        else if (score >= 61) perfPhrase = "Performance is meeting baseline standards, with meaningful upside if priority gaps are addressed.";
         else if (score >= 41) perfPhrase = "Significant improvement is needed — several areas require focused attention.";
         else                  perfPhrase = "Critical gaps require immediate attention — board-level intervention is warranted.";
 
