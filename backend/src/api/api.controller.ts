@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { SurveyService } from '../survey/survey.service';
 import { AchieveInsightsService, AchieveScores } from './achieve-insights.service';
+import type { AchieveChatRequest } from './achieve-insights.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles, Role } from '../auth/roles.decorator';
@@ -88,6 +89,22 @@ export class ApiController {
     };
     const report = await this.achieveInsightsService.generateReport(scores);
     return { report };
+  }
+
+  /**
+   * POST /api/achieve-chat
+   * Body: { question, page?, filters?, snapshot? }.
+   * Returns an internal answer grounded in current analytics data snapshot.
+   */
+  @Post('achieve-chat')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  async postAchieveChat(
+    @Body()
+    body: AchieveChatRequest,
+  ): Promise<{ answer: string }> {
+    const answer = await this.achieveInsightsService.answerQuestion(body || { question: '' });
+    return { answer };
   }
 
   private parseFilters(filtersStr?: string): DemographicFilters | undefined {

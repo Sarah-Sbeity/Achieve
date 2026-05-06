@@ -32,6 +32,19 @@ export interface AchieveScores {
   l4: number;
 }
 
+export interface AchieveChatRequest {
+  question: string;
+  page?: string;
+  filters?: Record<string, string>;
+  snapshot?: {
+    overall?: number;
+    responses?: number;
+    layers?: Array<{ name?: string; score?: number }>;
+    topRisks?: Array<{ question?: string; score?: number }>;
+    topStrengths?: Array<{ question?: string; score?: number }>;
+  };
+}
+
 @Injectable()
 export class AchieveInsightsService {
   private openai: OpenAI | null = null;
@@ -70,6 +83,73 @@ Return the insight report in the required structure.`;
       console.error('Achieve insights OpenAI error:', err);
       return this.fallbackReport(scores);
     }
+  }
+
+  async answerQuestion(payload: AchieveChatRequest): Promise<string> {
+    const question = String(payload?.question || '').trim();
+    if (!question) {
+      return 'Please add a question so I can help.';
+    }
+    const context = JSON.stringify(
+      {
+        page: payload?.page || '',
+        filters: payload?.filters || {},
+        snapshot: payload?.snapshot || {},
+      },
+      null,
+      2,
+    );
+    if (!this.openai) {
+      return this.fallbackChatAnswer(payload);
+    }
+    const systemPrompt = `You are an internal analytics copilot for Achieve.
+Use ONLY the provided dataset context to answer.
+If the user asks something not supported by the provided context, say so clearly.
+Keep answers concise, practical, and executive-friendly.
+When giving recommendations, tie them to exact scores/questions in the context.`;
+    try {
+      const completion = await this.openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          {
+            role: 'user',
+            content:
+              `Dataset context:\n${context}\n\nQuestion:\n${question}\n\n` +
+              'Answer with short bullets when useful.',
+          },
+        ],
+        max_tokens: 500,
+      });
+      const content = completion.choices[0]?.message?.content?.trim();
+      return content || this.fallbackChatAnswer(payload);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Achieve chat OpenAI error:', err);
+      return this.fallbackChatAnswer(payload);
+    }
+  }
+
+  private fallbackChatAnswer(payload: AchieveChatRequest): string {
+    const s = payload?.snapshot || {};
+    const layers = Array.isArray(s.layers) ? s.layers : [];
+    const weakest = layers.length
+      ? layers.reduce((a, b) => ((Number(a?.score || 0) <= Number(b?.score || 0)) ? a : b))
+      : null;
+    const strongest = layers.length
+      ? layers.reduce((a, b) => ((Number(a?.score || 0) >= Number(b?.score || 0)) ? a : b))
+      : null;
+    const low = Array.isArray(s.topRisks) ? s.topRisks[0] : null;
+    return [
+      `Based on your current data snapshot${payload?.page ? ` (${payload.page})` : ''}:`,
+      `- Overall score: ${Number(s.overall || 0).toFixed(1)}/100`,
+      `- Responses: ${Number(s.responses || 0)}`,
+      weakest ? `- Weakest layer: ${String(weakest.name || 'N/A')} (${Number(weakest.score || 0).toFixed(1)})` : '- Weakest layer: N/A',
+      strongest ? `- Strongest layer: ${String(strongest.name || 'N/A')} (${Number(strongest.score || 0).toFixed(1)})` : '- Strongest layer: N/A',
+      low ? `- Top risk question: "${String(low.question || 'N/A')}" (${Number(low.score || 0).toFixed(1)})` : '- Top risk question: N/A',
+      '',
+      'Ask a more specific question (for example: "Why is Layer 2 lower than Layer 4?" or "What should we do in the next 30 days?") and I will answer from this dataset.',
+    ].join('\n');
   }
 
   private fallbackReport(scores: AchieveScores): string {
