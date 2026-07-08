@@ -2,11 +2,16 @@
 
 ## Step 1: Start the backend (API server)
 
-1. Open **PowerShell** or **Command Prompt**.
+1. Open **PowerShell** or **Command Prompt** on your laptop.
 2. Run:
    ```bash
-   cd c:\Users\user\Desktop\Survey-Platform\backend
-   npm run start
+   cd (copy the path of the folder lets assum its on the sharepoint)
+   cd "C:\Users\user\Strathaus FZCO\Strathaus - Documents\04. Products\Achieve\Claude by sarah\Achieve Final"
+   cd backend
+   npm install
+   npx prisma generate
+   npx prisma migrate deploy
+   npm run start:dev
    ```
 3. Wait until you see: **"Nest application successfully started"** and **"API listening on http://0.0.0.0:3000"**.
 4. **Leave this window open** (do not close it).
@@ -15,10 +20,11 @@
 
 ## Step 2: Start the frontend (web app)
 
-1. Open a **second** PowerShell or Command Prompt window.
+1. Open a **SECOND** PowerShell or Command Prompt window.
 2. Run:
    ```bash
-   cd c:\Users\user\Desktop\Survey-Platform\frontend
+   cd "C:\Users\user\Strathaus FZCO\Strathaus - Documents\04. Products\Achieve\Claude by sarah\Achieve Final"
+   cd frontend
    npm run start
    ```
 3. Wait until you see something like: **"Serving!"** and a URL such as **http://localhost:5173**.
@@ -38,9 +44,10 @@ You should see the **Login** page (no sidebar, just the sign-in form).
 
 ## Step 4: Sign in
 
-1. Enter your **email** and **password**.
-2. Click **Sign in**.
-3. After a successful sign-in you should see the main app: **sidebar on the left** and **Survey** or **Analytics** (dashboard) on the right. You can then use the menu to open Survey, Analytics, Charts, Settings.
+1. Enter your **email** : admin@example.com
+ and **password**: AdminPassword123!
+3. Click **Sign in**.
+4. After a successful sign-in you should see the main app: **sidebar on the left** 
 
 ---
 
