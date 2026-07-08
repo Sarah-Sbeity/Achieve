@@ -25,6 +25,7 @@
    ```bash
    cd "C:\Users\user\Strathaus FZCO\Strathaus - Documents\04. Products\Achieve\Claude by sarah\Achieve Final"
    cd frontend
+   npm install
    npm run start
    ```
 3. Wait until you see something like: **"Serving!"** and a URL such as **http://localhost:5173**.
